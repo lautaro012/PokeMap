@@ -1,0 +1,26 @@
+// src/redux/slices/pokedexSlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+
+interface initialState {
+}
+
+const initialState: initialState = {
+ 
+};
+
+const MainSlice = createSlice({
+  name: 'MainSlice',
+  initialState,
+  reducers: {
+    startLoading(state) {
+
+    },
+  },
+});
+
+export const {
+  startLoading,
+} = MainSlice.actions;
+
+export default MainSlice.reducer;

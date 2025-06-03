@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "nombre": "Bulbasaur",
+    "imagen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    "tipos": ["Planta", "Veneno"],
+    "encontrado": true
+  },
+  {
+    "id": 4,
+    "nombre": "Charmander",
+    "imagen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    "tipos": ["Fuego"],
+    "encontrado": true
+  },
+  {
+    "id": 7,
+    "nombre": "Squirtle",
+    "imagen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    "tipos": ["Agua"],
+    "encontrado": false
+  },
+  {
+    "id": 10,
+    "nombre": "Caterpie",
+    "imagen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+    "tipos": ["Bicho"],
+    "encontrado": false
+  },
+  {
+    "id": 25,
+    "nombre": "Pikachu",
+    "imagen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+    "tipos": ["Eléctrico"],
+    "encontrado": true
+  },
+  {
+    "id": 39,
+    "nombre": "Jigglypuff",
+    "imagen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png",
+    "tipos": ["Normal", "Hada"],
+    "encontrado": false
+  }
+]
