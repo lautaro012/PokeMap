@@ -8,7 +8,6 @@ export default function Home() {
     const navigate = useNavigate();
 
 
-
     return(
         <div className="min-h-screen p-4 mt-20">
             <Navbar />
