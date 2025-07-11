@@ -1,5 +1,5 @@
 // src/redux/slices/pokedexSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 
 interface initialState {
@@ -13,8 +13,7 @@ const MainSlice = createSlice({
   name: 'MainSlice',
   initialState,
   reducers: {
-    startLoading(state) {
-
+    startLoading() {
     },
   },
 });
