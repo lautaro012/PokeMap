@@ -17,40 +17,34 @@ const MapaInteractivo: React.FC = () => {
   return (
     <div className="relative w-full h-[calc(100vh-2rem)] flex items-center justify-center p-4 bg-gray-100">
       {/* Contenedor del SVG con zoom y desplazamiento */}
-      <div className="relative w-full max-w-full max-h-[calc(100vh-2rem)]  touch-pinch-zoom">
+      <div className="relative w-[200%] sm:w-full max-w-none sm:max-w-full max-h-[calc(100vh-2rem)] overflow-auto touch-pinch-zoom">
         <svg
-          viewBox="0 0 1500 1300" // Ajustado a tu mapa
-          className="w-[100%] h-auto min-w-[1500px] min-h-[1300px]"
+          viewBox="0 0 1500 1300"
+          className="w-[1500px] h-[1300px] mx-auto sm:w-full sm:h-auto"
           role="img"
           aria-label="Mapa interactivo"
         >
-          {/* Imagen del mapa (reemplaza con tu SVG) */}
           <image
             href={map}
             width="1500"
             height="1300"
           />
-
-          {/* Áreas clickeables */}
-          {
-            POI.map((poi) => (
-              <rect
-                key={poi.id}
-                x={poi.positionX}
-                y={poi.positionY}
-                width={poi.width}
-                height={poi.height}
-                fill={'transparent'}
-                className="cursor-pointer hover:fill-blue-300/10 hover:stroke-blue-400 hover:stroke-2 transition-all duration-200"
-                onClick={() => handleRegionClick(poi.id, poi.location)}
-                role="button"
-                aria-label={poi.location}
-                tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && handleRegionClick(poi.id, poi.location)}
-              />
-            ))
-          }
-      
+          {POI.map((poi) => (
+            <rect
+              key={poi.id}
+              x={poi.positionX}
+              y={poi.positionY}
+              width={poi.width}
+              height={poi.height}
+              fill="transparent"
+              className="cursor-pointer hover:fill-blue-300/10 hover:stroke-blue-400 hover:stroke-2 transition-all duration-200"
+              onClick={() => handleRegionClick(poi.id, poi.location)}
+              role="button"
+              aria-label={poi.location}
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleRegionClick(poi.id, poi.location)}
+            />
+          ))}
         </svg>
       </div>
 

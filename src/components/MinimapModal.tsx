@@ -7,6 +7,7 @@ import CIUDAD_AZAFRAN from '../assets/images/ciudades/Ciudad_Azafran.png';
 import CIUDAD_CELESTE from '../assets/images/ciudades/Ciudad_Celeste.png';
 import CIUDAD_FUCSIA from '../assets/images/ciudades/Ciudad_Fucsia.png';
 import ISLA_CANELA from '../assets/images/ciudades/Isla_Canela_Old.png';
+import CENTRAL_ENERGICA from '../assets/images/lugares/Central_Energica.png';
 import CIUDAD_PLATEADA from '../assets/images/ciudades/Ciudad_Plateada.png';
 import CIUDAD_AZULONA from '../assets/images/ciudades/Ciudad_Azulona.png';
 import PUEBLO_LAVANDA from '../assets/images/ciudades/Pueblo_Lavanda.png';
@@ -39,6 +40,8 @@ import RUTA_19 from '../assets/images/rutas/Ruta_19.png';
 import RUTA_20 from '../assets/images/rutas/Ruta_20.png';
 import RUTA_21 from '../assets/images/rutas/Ruta_21.png';
 import Tunel_Roca from '../assets/images/lugares/Tunel_Roca.png';
+import { useRef } from 'react';
+import Radar from './Radar';
 
 interface MinimapaModalProps {
   region: string;
@@ -64,6 +67,7 @@ const minimapas: Record<string, string> = {
   Bosque_Verde: BOSQUE_VERDE,
   Ruta_3: RUTA_3,
   Monte_Moon: MONTE_MOON,
+  Central_Energica: CENTRAL_ENERGICA,
   Ruta_4: RUTA_4,
   Ruta_5: RUTA_5,
   Ruta_24: RUTA_24,
@@ -91,32 +95,42 @@ const minimapas: Record<string, string> = {
 };
 
 const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name , onClose }) => {
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in">
-      <div className="bg-white rounded-lg p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl"
-          aria-label="Cerrar modal"
-        >
-          ✕
-        </button>
-        <h1 className="text-xl text-color-black font-semibold mb-6 capitalize">{name}</h1>
+
+  const imageContainerRef = useRef<HTMLImageElement>(null);
+
+ return (
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in">
+    <div className="bg-white rounded-lg p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl"
+        aria-label="Cerrar modal"
+      >
+        ✕
+      </button>
+
+      <h1 className="text-xl text-color-black font-semibold mb-6 capitalize">{name}</h1>
+
+      <div className="relative w-full">
         <img
+          ref={imageContainerRef}
           src={minimapas[region]}
           alt={`Minimapa ${region}`}
-          className="w-full h-auto object-contain mb-4"
+          className="w-full h-auto object-contain"
         />
-        {/* Espacio para elementos interactivos */}
-        <div className="mt-4">
-          {/* Ejemplo: Placeholder para radar o botones */}
-          <div className="h-32 bg-gray-200 rounded flex items-center justify-center">
-            <span>Área para radar interactivo o botones</span>
-          </div>
+      </div>
+
+      <div className="mt-4">
+        <div className="h-32 bg-gray-200 rounded flex items-center justify-center">
+          <span>Área para radar interactivo o botones</span>
+          
+          <Radar imageRef={imageContainerRef} />
         </div>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default MinimapaModal;
