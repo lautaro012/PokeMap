@@ -8,10 +8,10 @@ import Mapainteractivo from '../pages/Mapainteractivo';
 export default function AppRoutes() {
   return (
     <Routes>
+      <Route path="/" element={<Mapainteractivo />} />
       <Route path="/map" element={<Map />} />
       <Route path="/map/:id" element={<Minimap />} />
       <Route path="/pokedex" element={<Home />} />
-      <Route path="/test" element={<Mapainteractivo />} />
       <Route path="/details/:id" element={<Details />} />
     </Routes>
   );
