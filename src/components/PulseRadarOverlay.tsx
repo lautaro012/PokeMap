@@ -8,10 +8,10 @@ interface PulseRadarOverlayProps {
   imageRef: React.RefObject<HTMLImageElement | null>
   spawns: { x: number; y: number }[]
   active: boolean
-  dragOffset: { x: number; y: number }
+  dragOffset?: { x: number; y: number }
 }
 
-export function PulseRadarOverlay({ imageRef, spawns, active, dragOffset }: PulseRadarOverlayProps) {
+export function PulseRadarOverlay({ imageRef, spawns, active }: PulseRadarOverlayProps) {
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 })
   const [pulseScale, setPulseScale] = useState(0)
 
