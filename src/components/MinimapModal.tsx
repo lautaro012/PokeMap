@@ -2,6 +2,7 @@
 
 import type React from "react"
 
+import { PulseRadarOverlay } from "./PulseRadarOverlay"
 import PUEBLO_PALETA from "../assets/images/ciudades/Pueblo_Paleta.png"
 import RUTA_1 from "../assets/images/rutas/Ruta_1.png"
 import RUTA_22 from "../assets/images/rutas/Ruta_22.png"
@@ -49,6 +50,7 @@ import { useRef, useState, useEffect } from "react"
 import Draggable from "react-draggable"
 import { RadarOverlay } from "./RadarOverlay"
 import { spawnPoints } from "../utils/Spawns"
+import { Radar, Zap } from "lucide-react"
 
 interface MinimapaModalProps {
   region: string
@@ -123,27 +125,38 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
         const image = imageRef.current
 
         const containerRect = container.getBoundingClientRect()
-        const imageRect = image.getBoundingClientRect()
 
-        // Calcular límites para que la imagen no se salga del contenedor
+        // Esperar a que la imagen esté completamente cargada
+        //const imageWidth = image.naturalWidth || image.offsetWidth
+        //const imageHeight = image.naturalHeight || image.offsetHeight
+
+        // Calcular la escala de la imagen mostrada vs su tamaño natural
+        const displayedWidth = image.offsetWidth
+        const displayedHeight = image.offsetHeight
+
+        // Calcular límites más precisos
         const bounds = {
-          left: Math.min(0, containerRect.width - imageRect.width),
-          top: Math.min(0, containerRect.height - imageRect.height),
-          right: Math.max(0, containerRect.width - imageRect.width),
-          bottom: Math.max(0, containerRect.height - imageRect.height),
+          left: Math.min(0, containerRect.width - displayedWidth),
+          top: Math.min(0, containerRect.height - displayedHeight),
+          right: Math.max(0, containerRect.width - displayedWidth),
+          bottom: Math.max(0, containerRect.height - displayedHeight),
         }
+
+        console.log("Bounds calculados:", bounds)
+        console.log("Container:", containerRect.width, "x", containerRect.height)
+        console.log("Image displayed:", displayedWidth, "x", displayedHeight)
 
         setDragBounds(bounds)
       }
     }
 
-    // Calcular bounds cuando la imagen se carga
+    // Calcular bounds con un pequeño delay para asegurar que la imagen esté renderizada
     const img = imageRef.current
     if (img) {
-      if (img.complete) {
-        calculateBounds()
+      if (img.complete && img.naturalWidth > 0) {
+        setTimeout(calculateBounds, 100)
       } else {
-        img.onload = calculateBounds
+        img.onload = () => setTimeout(calculateBounds, 100)
       }
     }
 
@@ -151,14 +164,26 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
     window.addEventListener("resize", calculateBounds)
     return () => window.removeEventListener("resize", calculateBounds)
   }, [region])
+  const [isPulseActive, setIsPulseActive] = useState(false)
+  const [isPulseUsed, setIsPulseUsed] = useState(false)
+  const handlePulseRadar = () => {
+    if (isPulseUsed) return
 
+    setIsPulseActive(true)
+    setIsPulseUsed(true)
+
+    // Desactivar después de 2 segundos
+    setTimeout(() => {
+      setIsPulseActive(false)
+    }, 2000)
+  }
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in">
       <div className="bg-white rounded-lg p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
         {/* Cerrar modal */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl"
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl z-10"
           aria-label="Cerrar modal"
         >
           ✕
@@ -172,16 +197,80 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
           ref={scrollRef}
           className="relative w-full overflow-hidden max-h-[60vh] border rounded cursor-grab active:cursor-grabbing"
         >
+          {/* Icono flotante del radar 
+          <button
+            onClick={handleToogleRadar}
+            className={`absolute top-4 right-4 z-20 p-3 rounded-full shadow-lg transition-all duration-200 ${
+              isRadarActive
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
+            }`}
+            aria-label={isRadarActive ? "Desactivar Radar" : "Activar Radar"}
+          >
+            <Radar className={`w-5 h-5 ${isRadarActive ? "animate-spin" : ""}`} />
+          </button>*/}
+          <button
+            onClick={handleToogleRadar}
+            className={`absolute top-4 right-4 z-20 p-3 rounded-full...`}
+          >
+            <Radar className={`w-5 h-5...`} />
+          </button>
+          {/* Controles flotantes */}
+          <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
+            {/* Radar normal */}
+            <button
+              onClick={handleToogleRadar}
+              className={`p-3 rounded-full shadow-lg transition-all duration-200 ${
+                isRadarActive
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
+              }`}
+              aria-label={isRadarActive ? "Desactivar Radar" : "Activar Radar"}
+            >
+              <Radar className={`w-5 h-5 ${isRadarActive ? "animate-spin" : ""}`} />
+            </button>
+
+            {/* Radar de pulso */}
+            <button
+              onClick={handlePulseRadar}
+              disabled={isPulseUsed}
+              className={`p-3 rounded-full shadow-lg transition-all duration-200 ${
+                isPulseUsed
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : isPulseActive
+                    ? "bg-yellow-500 text-white animate-pulse"
+                    : "bg-white text-yellow-600 hover:bg-yellow-50 border border-yellow-200"
+              }`}
+              aria-label={isPulseUsed ? "Pulso ya usado" : "Activar Pulso"}
+            >
+              <Zap className={`w-5 h-5 ${isPulseActive ? "animate-bounce" : ""}`} />
+            </button>
+          </div>
+              {/* Radar de pulso */}
+            {isPulseActive && (
+              <PulseRadarOverlay
+                imageRef={imageRef}
+                spawns={spawnPoints[region]}
+                active={isPulseActive}
+                scrollRef={scrollRef}
+              />
+            )}
           <Draggable
             bounds={dragBounds}
             nodeRef={dragRef}
             enableUserSelectHack={false}
-            onDrag={(e, data) => {
-              console.log(e);
+            defaultPosition={{ x: 0, y: 0 }}
+            onStart={() => {
+              console.log("Drag started")
+            }}
+            onDrag={(_e, data) => {
               setDragPosition({ x: data.x, y: data.y })
             }}
+            onStop={(_e, data) => {
+              console.log("Drag stopped at:", data.x, data.y)
+            }}
           >
-            <div className="relative" ref={dragRef} draggable={false}>
+            <div className="relative" ref={dragRef}>
               <img
                 ref={imageRef}
                 src={minimapas[region] || "/placeholder.svg"}
@@ -204,12 +293,8 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
           </Draggable>
         </div>
 
-        {/* ————— Controles fuera del scroll ————— */}
-        <div className="mt-4 flex justify-center space-x-2">
-          <button onClick={handleToogleRadar} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-            {isRadarActive ? "Desactivar Radar" : "Activar Radar"}
-          </button>
-        </div>
+        {/* ————— Espacio para otros controles si necesitas ————— */}
+        <div className="mt-4 flex justify-center space-x-2">{/* Aquí puedes agregar otros botones si necesitas */}</div>
       </div>
     </div>
   )
