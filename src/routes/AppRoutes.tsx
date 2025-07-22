@@ -7,7 +7,6 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Mapainteractivo />} />
-      <Route path="/map" element={<Mapainteractivo />} />
       <Route path="/pokedex" element={<Home />} />
       <Route path="/details/:id" element={<Details />} />
     </Routes>

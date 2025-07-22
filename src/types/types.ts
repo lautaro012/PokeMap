@@ -7,19 +7,21 @@ export interface Pokemon {
 }
 
 export interface PuntoMapa {
-  id: string;
-  nombre: string;
-  top: string;  
-  left: string; 
-  color?: string;
-};
+  id: string
+  nombre: string
+  top: string
+  left: string
+  color?: string
+}
+
+
 
 export interface POItype {
-  id: string;
-  location:string;
-  positionX: number;
-  positionY:number;
-  width: number;
-  height: number;
-  color?: string;
+  id: string
+  location: string
+  positionX: number
+  positionY: number
+  width: number
+  height: number
+  color?: string
 }

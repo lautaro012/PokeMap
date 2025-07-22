@@ -2,7 +2,6 @@
 
 import type React from "react"
 
-import { PulseRadarOverlay } from "./PulseRadarOverlay"
 import PUEBLO_PALETA from "../assets/images/ciudades/Pueblo_Paleta.png"
 import RUTA_1 from "../assets/images/rutas/Ruta_1.png"
 import RUTA_22 from "../assets/images/rutas/Ruta_22.png"
@@ -49,6 +48,7 @@ import Tunel_Roca from "../assets/images/lugares/Tunel_Roca.png"
 import { useRef, useState, useEffect } from "react"
 import Draggable from "react-draggable"
 import { RadarOverlay } from "./RadarOverlay"
+import { PulseRadarOverlay } from "./PulseRadarOverlay"
 import { spawnPoints } from "../utils/Spawns"
 import { Radar, Zap } from "lucide-react"
 
@@ -108,6 +108,8 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
   const imageRef = useRef<HTMLImageElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [isRadarActive, setIsRadarActive] = useState(false)
+  const [isPulseActive, setIsPulseActive] = useState(false)
+  const [isPulseUsed, setIsPulseUsed] = useState(false)
   const [dragBounds, setDragBounds] = useState({ left: 0, top: 0, right: 0, bottom: 0 })
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 })
   const dragRef = useRef<HTMLDivElement>(null)
@@ -115,6 +117,18 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
   const handleToogleRadar = () => {
     setIsRadarActive((prev) => !prev)
     console.log("Radar toggled:", !isRadarActive)
+  }
+
+  const handlePulseRadar = () => {
+    if (isPulseUsed) return
+
+    setIsPulseActive(true)
+    setIsPulseUsed(true)
+
+    // Desactivar después de 2 segundos
+    setTimeout(() => {
+      setIsPulseActive(false)
+    }, 2000)
   }
 
   // Calcular los límites de drag cuando la imagen se carga
@@ -142,10 +156,6 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
           bottom: Math.max(0, containerRect.height - displayedHeight),
         }
 
-        console.log("Bounds calculados:", bounds)
-        console.log("Container:", containerRect.width, "x", containerRect.height)
-        console.log("Image displayed:", displayedWidth, "x", displayedHeight)
-
         setDragBounds(bounds)
       }
     }
@@ -164,19 +174,7 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
     window.addEventListener("resize", calculateBounds)
     return () => window.removeEventListener("resize", calculateBounds)
   }, [region])
-  const [isPulseActive, setIsPulseActive] = useState(false)
-  const [isPulseUsed, setIsPulseUsed] = useState(false)
-  const handlePulseRadar = () => {
-    if (isPulseUsed) return
 
-    setIsPulseActive(true)
-    setIsPulseUsed(true)
-
-    // Desactivar después de 2 segundos
-    setTimeout(() => {
-      setIsPulseActive(false)
-    }, 2000)
-  }
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in">
       <div className="bg-white rounded-lg p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
@@ -192,29 +190,11 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
         {/* Título */}
         <h1 className="text-xl text-color-black font-semibold mb-6 capitalize">{name}</h1>
 
-        {/* ————— Draggable Image Container ————— */}
+        {/* —��——— Draggable Image Container ————— */}
         <div
           ref={scrollRef}
           className="relative w-full overflow-hidden max-h-[60vh] border rounded cursor-grab active:cursor-grabbing"
         >
-          {/* Icono flotante del radar 
-          <button
-            onClick={handleToogleRadar}
-            className={`absolute top-4 right-4 z-20 p-3 rounded-full shadow-lg transition-all duration-200 ${
-              isRadarActive
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
-            }`}
-            aria-label={isRadarActive ? "Desactivar Radar" : "Activar Radar"}
-          >
-            <Radar className={`w-5 h-5 ${isRadarActive ? "animate-spin" : ""}`} />
-          </button>*/}
-          <button
-            onClick={handleToogleRadar}
-            className={`absolute top-4 right-4 z-20 p-3 rounded-full...`}
-          >
-            <Radar className={`w-5 h-5...`} />
-          </button>
           {/* Controles flotantes */}
           <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
             {/* Radar normal */}
@@ -246,28 +226,14 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
               <Zap className={`w-5 h-5 ${isPulseActive ? "animate-bounce" : ""}`} />
             </button>
           </div>
-              {/* Radar de pulso */}
-            {isPulseActive && (
-              <PulseRadarOverlay
-                imageRef={imageRef}
-                spawns={spawnPoints[region]}
-                active={isPulseActive}
-                scrollRef={scrollRef}
-              />
-            )}
+
           <Draggable
             bounds={dragBounds}
             nodeRef={dragRef}
             enableUserSelectHack={false}
             defaultPosition={{ x: 0, y: 0 }}
-            onStart={() => {
-              console.log("Drag started")
-            }}
             onDrag={(_e, data) => {
               setDragPosition({ x: data.x, y: data.y })
-            }}
-            onStop={(_e, data) => {
-              console.log("Drag stopped at:", data.x, data.y)
             }}
           >
             <div className="relative" ref={dragRef}>
@@ -279,7 +245,7 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
                 draggable={false}
               />
 
-              {/* Radar Overlay */}
+              {/* Radar normal */}
               {isRadarActive && (
                 <RadarOverlay
                   imageRef={imageRef}
@@ -289,12 +255,19 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
                   dragOffset={dragPosition}
                 />
               )}
+
+              {/* Radar de pulso */}
+              {isPulseActive && (
+                <PulseRadarOverlay
+                  imageRef={imageRef}
+                  spawns={spawnPoints[region]}
+                  active={isPulseActive}
+                  dragOffset={dragPosition} // Añade esta línea
+                />
+              )}
             </div>
           </Draggable>
         </div>
-
-        {/* ————— Espacio para otros controles si necesitas ————— */}
-        <div className="mt-4 flex justify-center space-x-2">{/* Aquí puedes agregar otros botones si necesitas */}</div>
       </div>
     </div>
   )

@@ -1,43 +1,278 @@
 @import "tailwindcss";
 
-.silueta{
+/* ===== CLASES PERSONALIZADAS ===== */
+.silueta {
   filter: brightness(0%) contrast(100%);
 }
+
 .animate-fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
+
 .touch-pinch-zoom {
   touch-action: pan-x pan-y pinch-zoom;
 }
 
-@theme {
-        --color-grass: #78C850;
-      --color-poison: #A040A0;
-      --color-fire: #F08030;
-      --color-water: #6890F0;
-      --color-flying: #A890F0;
-      --color-bug: #A8B820;
-      --color-normal: #A8A878;
-        --color-electric: #F8D030;
-      --color-ground: #E0C068;
-     --color-fairy: #EE99AC;
-        --color-fighting: #C03028;
-       --color-psychic: #F85888;
-    --color-rock: #B8A038;
-     --color-ghost: #705898;
-   --color-ice: #98D8D8;
-      --color-dragon: #7038F8;
-    --color-dark: #705848;
-     --color-steel: #B8B8D0;
+/* ===== ANIMACIONES PERSONALIZADAS PARA SPAWNS POKÉMON ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
+/* Brillo pulsante para spawns */
+@keyframes pokemon-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700, 0 0 40px #ffd700;
+    transform: scale(1.1);
+  }
+}
+
+/* Rotación suave para anillos */
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Flotación para partículas */
+@keyframes float-sparkle {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-5px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* ===== UTILIDADES PERSONALIZADAS ===== */
+@layer utilities {
+  .shadow-glow {
+    box-shadow: 0 0 10px 3px rgba(59, 130, 246, 0.7);
+  }
+
+  .animate-pokemon-glow {
+    animation: pokemon-glow 2s infinite;
+  }
+
+  .animate-slow-spin {
+    animation: slow-spin 4s linear infinite;
+  }
+
+  .animate-float-sparkle {
+    animation: float-sparkle 2s infinite;
+  }
+
+  /* Efectos de brillo específicos para Pokémon */
+  .pokemon-spawn-glow {
+    box-shadow: 0 0 15px #ffd700, 0 0 25px #ffd700, 0 0 35px #ffd700;
+  }
+
+  .shiny-effect {
+    background: linear-gradient(45deg, #ffd700, #ffa500, #ffd700);
+    background-size: 200% 200%;
+    animation: shiny-gradient 2s ease infinite;
+  }
+}
+
+@keyframes shiny-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ===== VARIABLES DE TEMA ===== */
+/* Colores de tipos Pokémon (moved from @theme for compatibility) */
+:root {
+  --color-grass: #78c850;
+  --color-poison: #a040a0;
+  --color-fire: #f08030;
+  --color-water: #6890f0;
+  --color-flying: #a890f0;
+  --color-bug: #a8b820;
+  --color-normal: #a8a878;
+  --color-electric: #f8d030;
+  --color-ground: #e0c068;
+  --color-fairy: #ee99ac;
+  --color-fighting: #c03028;
+  --color-psychic: #f85888;
+  --color-rock: #b8a038;
+  --color-ghost: #705898;
+  --color-ice: #98d8d8;
+  --color-dragon: #7038f8;
+  --color-dark: #705848;
+  --color-steel: #b8b8d0;
+}
+
+/* ===== VARIABLES CSS GLOBALES ===== */
+:root {
+  /* Colores de tipos Pokémon (duplicados para compatibilidad) */
+  --color-grass: #78c850;
+  --color-poison: #a040a0;
+  --color-fire: #f08030;
+  --color-water: #6890f0;
+  --color-flying: #a890f0;
+  --color-bug: #a8b820;
+  --color-normal: #a8a878;
+  --color-electric: #f8d030;
+  --color-ground: #e0c068;
+  --color-fairy: #ee99ac;
+  --color-fighting: #c03028;
+  --color-psychic: #f85888;
+  --color-rock: #b8a038;
+  --color-ghost: #705898;
+  --color-ice: #98d8d8;
+  --color-dragon: #7038f8;
+  --color-dark: #705848;
+  --color-steel: #b8b8d0;
+
+  /* Variables de tema */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* ===== ESTILOS DE TIPOGRAFÍA ===== */
 h2 {
   font-weight: 800;
-  color:rgba(245, 243, 243, 0.886);
+  color: rgba(245, 243, 243, 0.886);
   font-size: 1rem;
 }
 
@@ -46,25 +281,3 @@ h3 {
   color: white;
   font-size: 1.5rem;
 }
-
-:root {
-          --color-grass: #78C850;
-      --color-poison: #A040A0;
-      --color-fire: #F08030;
-      --color-water: #6890F0;
-      --color-flying: #A890F0;
-      --color-bug: #A8B820;
-      --color-normal: #A8A878;
-        --color-electric: #F8D030;
-      --color-ground: #E0C068;
-     --color-fairy: #EE99AC;
-        --color-fighting: #C03028;
-       --color-psychic: #F85888;
-    --color-rock: #B8A038;
-     --color-ghost: #705898;
-   --color-ice: #98D8D8;
-      --color-dragon: #7038F8;
-    --color-dark: #705848;
-     --color-steel: #B8B8D0;
-}
-
