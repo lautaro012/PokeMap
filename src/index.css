@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+.silueta{
+  filter: brightness(0%) contrast(100%);
+}
 .animate-fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }
