@@ -8,11 +8,11 @@ interface RadarOverlayProps {
   imageRef: React.RefObject<HTMLImageElement | null>
   spawns: { x: number; y: number }[]
   active: boolean
-  scrollRef: React.RefObject<HTMLDivElement | null>
-  dragOffset: { x: number; y: number }
+  scrollRef?: React.RefObject<HTMLDivElement | null>
+  dragOffset?: { x: number; y: number }
 }
 
-export function RadarOverlay({ imageRef, spawns, active, scrollRef, dragOffset }: RadarOverlayProps) {
+export function RadarOverlay({ imageRef, spawns, active, }: RadarOverlayProps) {
   const [radarPos, setRadarPos] = useState<{ x: number; y: number } | null>(null)
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 })
 

@@ -177,6 +177,7 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ region, name, onClose }) 
             nodeRef={dragRef}
             enableUserSelectHack={false}
             onDrag={(e, data) => {
+              console.log(e);
               setDragPosition({ x: data.x, y: data.y })
             }}
           >
