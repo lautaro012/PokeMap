@@ -1,0 +1,55 @@
+Contexto del proyecto:
+- App en React + TypeScript. Mapa de Kanto en SVG, zonas clickeables → modal con minimapa draggable.
+- Herramientas actuales: radar continuo y radar de pulso. Próximas: brújula, geiger, sonar/caña, destello.
+- Biomas/métodos: hierba, agua, cueva, costa (métodos: hierba, cueva, surf, caña; variantes de caña más adelante).
+- Decisión conceptual: “environment-first”.
+  * Zona → contiene Áreas de Spawn (bioma/método/forma normalizada 0..1, capacidad, requisitos de herramienta).
+  * SpawnPoints se generan desde esas áreas (semilla diaria por usuario).
+  * Pokémon declaran compatibilidad (biomas/métodos) + rareza. La asignación une todo con cuotas (garantizar 151).
+- Objetivos:
+  1) Unificar datos con modelos canónicos (IDs kebab-case, coords relativas 0..1).
+  2) Definir contratos de datos TS/JSON y enums estables (biomas, métodos, rarezas, requisitos).
+  3) Diseñar algoritmo de asignación: cobertura 151 → relleno ponderado por rareza/bioma/método → cuotas por método → semilla diaria.
+  4) Ajuste del radar: radio = % del lado corto + clamps + factor zoom + factor densidad + adaptativo suave.
+  5) Ciudades: hubs de progresión (tiendas, NPC pistas, eventos urbanos, micro-biomas contextuales).
+  6) Telemetría mínima: tiempo-a-hallazgo, barridos por hallazgo, uso de herramientas.
+
+Qué necesito que hagas:
+1) Empezá por revisar/definir CONTRATOS DE DATOS (sin escribir código de UI todavía):
+   - Types/JSON para: Region, Zone, SpawnArea, SpawnPoint (derivado), Pokemon, EncounterRule/Weights, ToolRequirement.
+   - Enums: Biome = {grass, water, cave, coast}, Method = {grass, surf, rod, cave}, Rarity = {common, uncommon, rare, mythic}.
+   - Reglas de IDs (kebab-case), normalización de coords (0..1), y shape para áreas (rect o polygon).
+2) Luego diseñemos el ALGORITMO DE ASIGNACIÓN paso a paso (pseudología, no código):
+   - Semilla diaria por usuario; generación de SpawnPoints desde SpawnAreas (capacidad y separación mínima).
+   - Cobertura de los 151 (primero uno por cada especie en un área compatible, luego relleno).
+   - Pesos por rareza/bioma/método y cuotas mínimas por método (hierba/agua/cueva/costa).
+   - Validaciones (variedad por zona, evitar “overcrowding”).
+3) Después pasamos al RADAR y HERRAMIENTAS (reglas numéricas y comportamiento, sin UI):
+   - Radio base %, clamps por dispositivo, ajuste por zoom y densidad, adaptativo por performance del jugador.
+   - 3 herramientas base a definir: Radar básico (Pokedex), Destello (cuevas), Caña/Sonar (agua/costa). Opcional: Brújula o Geiger.
+4) Finalmente plan para CIUDADES (1–2 micro-biomas por ciudad, tiendas, NPC pistas) y la POKEDEX (estados, filtros, progreso).
+
+Datos que voy a traer (pegados en mensajes separados para que los adaptes):
+- POI actuales (zonas) y sus imágenes.
+- SpawnPoints/Spawns existentes (si los hay).
+- Cualquier metadata de Pokémon (tipos, rarezas si ya las tengo).
+- Estructuras JSON reales que estoy usando hoy.
+
+Por favor, arrancá pidiéndome los JSON/metadata actuales y proponé los CONTRATOS DE DATOS definitivos (con nombres de campos, enums y validaciones) para que yo los pegue uno a uno y los migremos.
+
+
+ IDs y enums: fijar kebab-case, Biome, Method, Rarity.
+
+ Contratos: Zone, SpawnArea (geom 0..1, método, bioma, capacidad, requisitos), Pokemon (compatibilidad + rareza), EncounterWeights.
+
+ Normalización: convertir POI/coords absolutas → relativas 0..1; decidir rect vs polygon.
+
+ Asignación (diseño): cobertura 151 → cuotas por método → relleno por pesos → validaciones.
+
+ Radar (diseño): fórmula de radio (%, clamps), factor zoom, densidad, adaptativo; métricas objetivo (3–6 barridos/hallazgo).
+
+ Herramientas base: comportamiento/limitaciones/cooldowns y sinergias (mínimo: Radar, Destello, Caña/Sonar).
+
+ Ciudades: 1–2 micro-biomas cada una + NPC de pistas + tienda (desbloqueos).
+
+ Telemetría mínima: eventos a loguear para calibrar dificultad.
