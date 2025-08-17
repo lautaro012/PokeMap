@@ -52,7 +52,7 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ zoneId, name, onClose }) 
   const handlePulseRadar = () => {
     if (isPulseUsed) return;
     setIsPulseActive(true); 
-    //setIsPulseUsed(true);
+    setIsPulseUsed(true);
     setTimeout(() => setIsPulseActive(false), 2000);
   };
 

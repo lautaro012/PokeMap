@@ -38,7 +38,7 @@ function toPxRect(shape: Shape, w: number, h: number) {
   };
 }
 
-function centroid(shape: Shape, w: number, h: number) {
+/*function centroid(shape: Shape, w: number, h: number) {
   if (shape.type === "rect") {
     return [(shape.x + shape.w / 2) * w, (shape.y + shape.h / 2) * h] as [number, number];
   }
@@ -46,9 +46,9 @@ function centroid(shape: Shape, w: number, h: number) {
   let x = 0, y = 0;
   for (const p of pts) { x += p[0]; y += p[1]; }
   return [x / pts.length, y / pts.length] as [number, number];
-}
+}*/
 
-export const SpawnAreasOverlay: React.FC<Props> = ({ zoneId, imageRef, showLabels = true, opacity = 0.25 }) => {
+export const SpawnAreasOverlay: React.FC<Props> = ({ zoneId, imageRef, opacity = 0.25 }) => {
 
 
   const { iw, ih } = useMemo(() => {
@@ -72,7 +72,7 @@ export const SpawnAreasOverlay: React.FC<Props> = ({ zoneId, imageRef, showLabel
       {zone.spawnAreas.map((a) => {
         const color = colorFor(a);
         const px = toPxRect(a.shape, iw, ih);
-        const [cx, cy] = centroid(a.shape, iw, ih);
+        //const [cx, cy] = centroid(a.shape, iw, ih);
         return (
           <g key={a.id}>
             {px.type === "rect" ? (

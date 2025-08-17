@@ -14,8 +14,6 @@ export interface PuntoMapa {
   color?: string
 }
 
-
-
 export interface POItype {
   id: string
   location: string
