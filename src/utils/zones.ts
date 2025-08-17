@@ -476,7 +476,28 @@ export const ZONES: Zone[] = [
     kind: "grass",
     minimapImageKey: "ruta-8",
     mainMapShape: { type: "rect", x: 1160/1500, y: 530/1300, w: 120/1500, h: 70/1300 },
-    spawnAreas: []
+    spawnAreas: [
+      {
+        id: "ruta-8-grass-1", 
+        biome: "grass", 
+        method: "grass",
+        shape: {type: "polygon", points:[[0.62, 0.45], [0.62, 0.8], [0.59, 0.8], [0.52, 0.53], 
+          [0.53, 0.45] ]},
+        capacity: 10,
+        weight: 1
+      },
+      {
+        id: "ruta-8-grass-2", 
+        biome: "grass", 
+        method: "grass",
+        shape: {type: "polygon", points:[[0.50, 0.86], [0.55, 0.86], [0.55, 0.83], 
+          [0.55, 0.83], [0.58, 0.83], [0.58, 0.78], [0.55, 0.78], [0.55, 0.75], [0.563, 0.75],
+          [0.563, 0.7], [0.545, 0.7], [0.545, 0.73], [0.534, 0.73], [0.534, 0.7], [0.5, 0.7],
+          [0.5, 0.79], [0.515, 0.79]]},
+        capacity: 10,
+        weight: 1
+      },
+    ]
   },
   {
     id: "ruta-7",
@@ -535,7 +556,16 @@ export const ZONES: Zone[] = [
     kind: "grass",
     minimapImageKey: "ruta-16",
     mainMapShape: { type: "rect", x: 760/1500, y: 570/1300, w: 120/1500, h: 100/1300 },
-    spawnAreas: []
+    spawnAreas: [
+      {
+      id: "ruta-16-grass-1", 
+      biome: "grass", 
+      method: "grass",
+      shape: {type: "rect", x: 0.56, y: 0, w: 0.09, h: 0.14},
+      capacity: 10,
+      weight: 1 
+    }
+  ]
   },
   {
     id: "ruta-17",
@@ -575,7 +605,14 @@ export const ZONES: Zone[] = [
     kind: "grass",
     minimapImageKey: "ruta-13",
     mainMapShape: { type: "rect", x: 1150/1500, y: 790/1300, w: 190/1500, h: 50/1300 },
-    spawnAreas: []
+    spawnAreas: [{
+      id: "ruta-13-grass-1", 
+      biome: "grass",
+      method: "grass",
+      shape: { type: "rect", x: 0.79, y: 0.37, w: 0.08, h: 0.23 }, 
+      capacity: 10, 
+      weight: 1
+    }]
   },
   {
     id: "ruta-14",
@@ -583,7 +620,15 @@ export const ZONES: Zone[] = [
     kind: "grass",
     minimapImageKey: "ruta-14",
     mainMapShape: { type: "rect", x: 1170/1500, y: 830/1300, w: 40/1500, h: 110/1300 },
-    spawnAreas: []
+    spawnAreas: [
+      {
+        id: "ruta-14-grass-1", 
+        biome: "grass",
+        method: "grass",
+        shape: { type: "rect", x: 0.03, y: 0.01, w: 0.19, h: 0.1 }, 
+        capacity: 10, 
+        weight: 1
+    }]
   },
   {
     id: "ruta-15",
