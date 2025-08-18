@@ -1,6 +1,5 @@
-import type { PuntoMapa, POItype } from "../types/types";
 
-export const puntosDeInteres: PuntoMapa[] = [
+/*export const puntosDeInteres: PuntoMapa[] = [
   { id: "pueblo-paleta", nombre: "Pueblo Paleta", top: "60%", left: "40%", color: "#FF4444" },
   { id: "ciudad-verde", nombre: "Ciudad Verde", top: "43%", left: "40%", color: "#FF4444" },
   { id: "ciudad-plateada", nombre: "Ciudad Plateada", top: "25%", left: "40%", color: "#FF4444" },
@@ -121,3 +120,4 @@ export const POI: POItype[] = [
   { id: "Ruta_20", location: "Ruta 20", positionX: 650, positionY: 1020, width: 220, height: 60, color: "green" },
   { id: "Ruta_21", location: "Ruta 21", positionX: 580, positionY: 830, width: 70, height: 180 },
 ]
+*/

@@ -1,7 +1,7 @@
-"use client"
+/*"use client"
 
 import { useEffect, useRef, useState } from "react"
-import { puntosDeInteres } from "../utils/POI"
+//import { puntosDeInteres } from "../utils/POI"
 import { useNavigate } from "react-router-dom"
 
 export default function MapaKanto() {
@@ -32,7 +32,7 @@ export default function MapaKanto() {
 
   return (
     <div ref={containerRef} className="w-full h-screen overflow-auto relative">
-      {/* Botón para mostrar/ocultar todos los puntos */}
+
       <div className="fixed top-4 right-4 z-50">
         <button
           onClick={() => setShowAllPoints(!showAllPoints)}
@@ -63,7 +63,6 @@ export default function MapaKanto() {
               left: punto.left,
             }}
           >
-            {/* 🌟 EFECTO 1: Ondas concéntricas expansivas */}
             <div className="absolute -translate-x-1/2 -translate-y-1/2">
               {[0, 0.3, 0.6].map((delay, index) => (
                 <div
@@ -85,7 +84,6 @@ export default function MapaKanto() {
               ))}
             </div>
 
-            {/* 🔥 EFECTO 2: Resplandor pulsante de fondo */}
             <div
               className={`absolute rounded-full transition-all duration-500 ${
                 activePoint === punto.id || showAllPoints ? "animate-pulse opacity-40" : "opacity-0"
@@ -99,7 +97,6 @@ export default function MapaKanto() {
               }}
             />
 
-            {/* ⭐ EFECTO 3: Punto principal con brillo y escala */}
             <button
               className={`absolute rounded-full border-4 border-white transition-all duration-300 ${
                 activePoint === punto.id || showAllPoints
@@ -127,7 +124,6 @@ export default function MapaKanto() {
               aria-label={`Ir a ${punto.nombre}`}
             />
 
-            {/* ✨ EFECTO 4: Partículas flotantes */}
             {(activePoint === punto.id || showAllPoints) && (
               <div className="absolute -translate-x-1/2 -translate-y-1/2">
                 {[...Array(6)].map((_, i) => (
@@ -147,7 +143,6 @@ export default function MapaKanto() {
               </div>
             )}
 
-            {/* 💬 EFECTO 5: Tooltip mejorado con animación */}
             <div
               className={`absolute whitespace-nowrap px-4 py-2 rounded-full font-bold text-sm shadow-2xl transition-all duration-300 ${
                 activePoint === punto.id || showAllPoints || isMobile
@@ -167,7 +162,6 @@ export default function MapaKanto() {
               }}
             >
               {punto.nombre}
-              {/* Flecha del tooltip */}
               <div
                 className="absolute w-0 h-0"
                 style={{
@@ -186,3 +180,4 @@ export default function MapaKanto() {
     </div>
   )
 }
+*/

@@ -16,7 +16,7 @@ const MIN_ZOOM = BASE_ZOOM;
 const MAX_ZOOM = 2;
 
 const colorFor = (z: Zone) =>
-  z.kind === "city" ? "#2196F3" : z.kind === "grass" ? "#4CAF50" : "#FFD700";
+  z.kind === "city" ? "#2196F3" : z.kind === "route" ? "#4CAF50" : "#FFD700";
 
 const MapaInteractivo: React.FC = () => {
   

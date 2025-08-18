@@ -12,12 +12,12 @@ type Props = {
 
 const colorFor = (a: SpawnArea) => {
   // Colores simples por método (cámbialos a gusto)
-  switch (a.method) {
+  switch (a.medium) {
     case "grass": return "#22c55e"; // verde
-    case "rod":   return "#0ea5e9"; // celeste
-    case "surf":  return "#0284c7"; // azul
-    case "flash": return "#f59e0b"; // ámbar
-    case "none":  return "#8b5cf6"; // violeta (urbano)
+    case "water":  return "#0284c7"; // azul
+    //case "rod":   return "#0ea5e9"; // celeste
+    //case "flash": return "#f59e0b"; // ámbar
+    //case "none":  return "#8b5cf6"; // violeta (urbano)
     default:      return "#64748b"; // slate
   }
 };
