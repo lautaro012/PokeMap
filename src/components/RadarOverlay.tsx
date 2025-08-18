@@ -66,7 +66,14 @@ export function RadarOverlay({ imageRef, spawns, active, radiusPct = 0.2 }: Rada
     : []
 
   if (!active || !imageRef.current || imageDimensions.width === 0 || imageDimensions.height === 0) return null
-
+  const markerThemeForSpawn = (sp:any): "bush"|"bubbles"|"swell" => {
+    if (sp.medium === "water") {
+      // lago: bubbles | mar: swell
+      return sp.zoneKind === "sea" || sp.mechanic === "surf" ? "swell" : "bubbles";
+    }
+    return "bush";
+  };
+  
   return (
     <div
       className="absolute top-0 left-0 z-50"
@@ -111,7 +118,7 @@ export function RadarOverlay({ imageRef, spawns, active, radiusPct = 0.2 }: Rada
             }}
             title="¡Algo se mueve por aquí…!"
           >
-            <HintMarker size={markerSize} radarDetected={true} />
+            <HintMarker size={markerSize} theme={markerThemeForSpawn(sp)}  radarDetected={true} />
           </div>
         )
       })}

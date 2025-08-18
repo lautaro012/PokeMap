@@ -42,8 +42,13 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ zoneId, name, onClose }) 
   //* busca la zona entre todas
   const zone = useMemo(() => ZONES.find(z => z.id === zoneId)!, [zoneId]);
 
-  const spawns = generateSpawnsForZone(zone, { seed: "dev", minDist: 0.5, maxPerArea: 4 });
-
+  const spawns = generateSpawnsForZone(zone, {
+    seed: "dev",
+    minDist: 0.42,
+    maxPerArea: 6,
+    // filtros opcionales:
+    // mechanic: ["walk","rod"], medium: "water", rodTier: "old"
+  });
   //*Traigo la imagen desde public
   const key = zone?.minimapImageKey ?? zoneId; // ej: "ruta-6"
   const imgSrc = `/minimap/${key}.png`;       // servido desde /public

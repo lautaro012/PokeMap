@@ -30,6 +30,7 @@ export interface Zone {
 }
 
 
+export type HintMarkerTheme = "bush" | "bubbles" | "swell";
 
 //*------------- util en el futuro -------------
 export interface Pokemon {
