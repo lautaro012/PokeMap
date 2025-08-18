@@ -81,6 +81,8 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ zoneId, name, onClose }) 
 
   //! const spawns = getAnchors(zoneId); // por ahora: anchors fijos
 
+  const radarPct = zone?.minimapRadarPct ?? 0.05;
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in">
       <div className="bg-white rounded-lg p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
@@ -138,8 +140,7 @@ const MinimapaModal: React.FC<MinimapaModalProps> = ({ zoneId, name, onClose }) 
                   imageRef={imageRef}
                   spawns={spawns}      
                   active={isRadarActive}
-                  scrollRef={scrollRef}
-                  dragOffset={dragPosition}
+                  radiusPct={radarPct}
                 />
               )}
               {isPulseActive && (
